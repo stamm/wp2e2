@@ -2,8 +2,6 @@
 /**
  * Класс импорта статей из wordpress в Эгею
  * User: Zagirov Rustam <rustam@zagirov.name>
- * Date: 10.04.11
- * Time: 20:58
  */
 
 Class Parse {
@@ -103,6 +101,7 @@ Class Parse {
 					'IsPublished' => $aPost['post_type'] == 'post',
 					'Stamp' => 	strtotime($aPost['post_date']),
 					'LastModified' => strtotime($aPost['post_modified']),
+					'FormatterID' => 'raw',
 				);
 				$sSql = 'INSERT INTO `' . $this->e2Prefix . 'Notes` (' . implode(',', array_keys($aSql)) . ')
 				VALUES (' . implode(',', array_map(array($dbE2, 'quote'), $aSql)) . ')';
