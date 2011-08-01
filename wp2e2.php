@@ -24,34 +24,32 @@ public $e2Prefix='e2Blog';
  * Парсинг статей из wordpress
  * @return void
  */
-function go()
-{
-try {
-$dbWp = new PDO('mysql:dbname=' . $this->wpDb . ';host=' . $this->wpHost, $this->wpUser, $this->wpUser);
-$dbE2 = new PDO('mysql:dbname=' . $this->e2Db . ';host=' . $this->e2Host, $this->e2User, $this->e2User);
+	function go()
+	{
+		try {
+			$dbWp = new PDO('mysql:dbname=' . $this->wpDb . ';host=' . $this->wpHost, $this->wpUser, $this->wpUser);
+			$dbE2 = new PDO('mysql:dbname=' . $this->e2Db . ';host=' . $this->e2Host, $this->e2User, $this->e2User);
 
-$dbWp->query('SET NAMES cp1251');
-$dbE2->query('SET NAMES cp1251');
+			$dbWp->query('SET NAMES cp1251');
+			$dbE2->query('SET NAMES cp1251');
 
-// Посты
-$sSql = 'SELECT id, post_date, post_content, post_title, post_name, post_type, post_modified
-FROM `' . $this->wpPrefix . 'posts`
-WHERE post_type IN ("post", "draft")
-AND post_status = "publish"
-ORDER BY id ASC';
-$aPosts = array();
-foreach ($dbWp->query($sSql) as $aPost)
-{
-// Перекодируем
-$aPosts[$aPost['id']] = $aPost;
-}
-unset($aPostsSql);
+			// Посты
+			$sSql = 'SELECT id, post_date, post_content, post_title, post_name, post_type, post_modified
+			FROM `' . $this->wpPrefix . 'posts`
+			WHERE post_type IN ("post", "draft")
+			AND post_status = "publish"
+			ORDER BY id ASC';
+			$aPosts = array();
+			foreach ($dbWp->query($sSql) as $aPost)
+			{
+				$aPosts[$aPost['id']] = $aPost;
+			}
+			unset($aPostsSql);
 
-
-// Тэги
-$sSql = 'SELECT r.object_id as post_id, t.name
-FROM `' . $this->wpPrefix . 'term_relationships` AS r
-JOIN `' . $this->wpPrefix . 'term_taxonomy` AS tt ON r.term_taxonomy_id = tt.term_id AND tt.taxonomy="post_tag"
+			// Тэги
+			$sSql = 'SELECT r.object_id as post_id, t.name
+			FROM `' . $this->wpPrefix . 'term_relationships` AS r
+			JOIN `' . $this->wpPrefix . 'term_taxonomy` AS tt ON r.term_taxonomy_id = tt.term_id AND tt.taxonomy="post_tag"
 				JOIN `' . $this->wpPrefix . 'terms` AS t ON t.term_id = tt.term_id
 				ORDER BY post_id';
 			
