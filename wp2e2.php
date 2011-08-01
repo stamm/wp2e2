@@ -1,29 +1,29 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
+ * Класс импорта статей из wordpress в Эгею
  * User: Zagirov Rustam <rustam@zagirov.name>
  * Date: 10.04.11
  * Time: 20:58
  */
 
 Class Parse {
-public $wpHost;
-public $wpDb;
-public $wpUser;
-public $wpPassword;
-public $wpPrefix='wp_';
+	public $wpHost;
+	public $wpDb;
+	public $wpUser;
+	public $wpPassword;
+	public $wpPrefix='wp_';
 
-public $e2Host;
-public $e2Db;
-public $e2User;
-public $e2Password;
-public $e2Prefix='e2Blog';
+	public $e2Host;
+	public $e2Db;
+	public $e2User;
+	public $e2Password;
+	public $e2Prefix='e2Blog';
 
 
-/**
- * Парсинг статей из wordpress
- * @return void
- */
+	/**
+	 * Собственно сама работа
+	 * @return void
+	 */
 	function go()
 	{
 		try {
