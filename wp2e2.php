@@ -25,8 +25,8 @@ Class Parse {
 	function go()
 	{
 		try {
-			$dbWp = new PDO('mysql:dbname=' . $this->wpDb . ';host=' . $this->wpHost, $this->wpUser, $this->wpUser);
-			$dbE2 = new PDO('mysql:dbname=' . $this->e2Db . ';host=' . $this->e2Host, $this->e2User, $this->e2User);
+			$dbWp = new PDO('mysql:dbname=' . $this->wpDb . ';host=' . $this->wpHost, $this->wpUser, $this->wpPassword);
+			$dbE2 = new PDO('mysql:dbname=' . $this->e2Db . ';host=' . $this->e2Host, $this->e2User, $this->e2Password);
 
 			$dbWp->query('SET NAMES cp1251');
 			$dbE2->query('SET NAMES cp1251');
