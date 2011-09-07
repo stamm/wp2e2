@@ -32,10 +32,10 @@ Class Parse {
 			$dbE2->query('SET NAMES cp1251');
 
 			// Посты
-			$sSql = 'SELECT id, post_date, post_content, post_title, post_name, post_type, post_modified
+			$sSql = 'SELECT id, post_date, post_content, post_title, post_name, post_type, post_modified, post_status
 			FROM `' . $this->wpPrefix . 'posts`
-			WHERE post_type IN ("post", "draft")
-			AND post_status = "publish"
+			WHERE post_type = "post"
+			AND post_status IN ("publish", "draft")
 			ORDER BY id ASC';
 			$aPosts = array();
 			foreach ($dbWp->query($sSql) as $aPost)
@@ -98,7 +98,7 @@ Class Parse {
 					'Title' => $aPost['post_title'],
 					'URLName' => $aPost['post_name'],
 					'Text' => $aPost['post_content'],
-					'IsPublished' => $aPost['post_type'] == 'post',
+					'IsPublished' => $aPost['post_status'] == 'post',
 					'Stamp' => 	strtotime($aPost['post_date']),
 					'LastModified' => strtotime($aPost['post_modified']),
 					'FormatterID' => 'raw',
