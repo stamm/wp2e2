@@ -98,7 +98,7 @@ Class Parse {
 					'Title' => $aPost['post_title'],
 					'URLName' => $aPost['post_name'],
 					'Text' => $aPost['post_content'],
-					'IsPublished' => $aPost['post_status'] == 'post',
+					'IsPublished' => $aPost['post_status'] == 'publish',
 					'Stamp' => 	strtotime($aPost['post_date']),
 					'LastModified' => strtotime($aPost['post_modified']),
 					'FormatterID' => 'raw',
