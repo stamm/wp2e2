@@ -96,7 +96,7 @@ Class Parse {
 			{
 				$aSql = array(
 					'Title' => $aPost['post_title'],
-					'URLName' => $aPost['post_name'],
+					'OriginalAlias' => $aPost['post_name'],
 					'Text' => $aPost['post_content'],
 					'IsPublished' => $aPost['post_status'] == 'publish',
 					'Stamp' => 	strtotime($aPost['post_date']),
