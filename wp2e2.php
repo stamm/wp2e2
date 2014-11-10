@@ -43,6 +43,7 @@ Class Parse {
 				$aPosts[$aPost['id']] = $aPost;
 			}
 			unset($aPostsSql);
+			echo "Found {$aPosts} posts";
 
 			// Тэги
 			$sSql = 'SELECT r.object_id as post_id, t.name
