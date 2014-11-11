@@ -47,7 +47,7 @@ Class Parse {
 				$aPosts[$aPost['id']] = $aPost;
 			}
 			unset($aPostsSql);
-			echo "Found {$aPosts} posts";
+			echo 'Found ' . count($aPosts) . ' posts';
 
 			// Тэги
 			$sSql = 'SELECT r.object_id as post_id, t.name
@@ -113,6 +113,7 @@ Class Parse {
 
 				$dbE2->exec($sSql);
 				$iPostId = $dbE2->lastInsertId();
+				echo ''
 
 				if (isset($aPost['tags']))
 				{
