@@ -113,7 +113,7 @@ Class Parse {
 
 				$dbE2->exec($sSql);
 				$iPostId = $dbE2->lastInsertId();
-				echo ''
+				echo 'post_id: ' . $iPostId;
 
 				if (isset($aPost['tags']))
 				{
