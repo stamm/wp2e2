@@ -36,7 +36,7 @@ Class Parse {
 			$dbE2->query('SET NAMES cp1251');
 
 			// Посты
-			$sSql = 'SELECT id, post_date, post_content, post_title, post_name, post_type, post_modified, post_status
+			$sSql = 'SELECT id, post_date, post_date_gmt, post_content, post_title, post_name, post_type, post_modified, post_status, comment_status
 			FROM `' . $this->wpPrefix . 'posts`
 			WHERE post_type = "post"
 			AND post_status IN ("publish", "draft")
@@ -104,9 +104,11 @@ Class Parse {
 					'OriginalAlias' => $aPost['post_name'],
 					'Text' => $aPost['post_content'],
 					'IsPublished' => $aPost['post_status'] == 'publish',
+					'IsCommentable' => $aPost['comment_status'] == 'open',
 					'Stamp' => 	strtotime($aPost['post_date']),
 					'LastModified' => strtotime($aPost['post_modified']),
 					'FormatterID' => 'raw',
+					'Offset' => (strtotime($aPost['post_date']) - strtotime($aPost['post_date_gmt'])),
 				);
 				$sSql = 'INSERT INTO `' . $this->e2Prefix . 'Notes` (' . implode(',', array_keys($aSql)) . ')
 				VALUES (' . implode(',', array_map(array($dbE2, 'quote'), $aSql)) . ')';
