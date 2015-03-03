@@ -19,7 +19,7 @@ Class Parse {
 	public $e2Db;
 	public $e2User;
 	public $e2Password;
-	public $e2Prefix='e2Blog';
+	public $e2Prefix='e2_';
 
 
 	/**
@@ -32,8 +32,8 @@ Class Parse {
 			$dbWp = new PDO('mysql:dbname=' . $this->wpDb . ';host=' . $this->wpHost, $this->wpUser, $this->wpPassword);
 			$dbE2 = new PDO('mysql:dbname=' . $this->e2Db . ';host=' . $this->e2Host, $this->e2User, $this->e2Password);
 
-			$dbWp->query('SET NAMES cp1251');
-			$dbE2->query('SET NAMES cp1251');
+			$dbWp->query('SET NAMES utf8');
+			$dbE2->query('SET NAMES utf8');
 
 			// Посты
 			$sSql = 'SELECT id, post_date, post_date_gmt, post_content, post_title, post_name, post_type, post_modified, post_status, comment_status
@@ -105,7 +105,7 @@ Class Parse {
 					'Text' => $aPost['post_content'],
 					'IsPublished' => $aPost['post_status'] == 'publish',
 					'IsCommentable' => $aPost['comment_status'] == 'open',
-					'Stamp' => 	strtotime($aPost['post_date']),
+					'Stamp' => strtotime($aPost['post_date']),
 					'LastModified' => strtotime($aPost['post_modified']),
 					'FormatterID' => 'raw',
 					'Offset' => (strtotime($aPost['post_date']) - strtotime($aPost['post_date_gmt'])),
@@ -144,13 +144,13 @@ Class Parse {
 							'AuthorName' => $aComment['author'],
 							'AuthorEmail' => $aComment['email'],
 							'Text' => $aComment['content'],
-							'Stamp' => 	strtotime($aComment['create_time']),
+							'Stamp' => strtotime($aComment['create_time']),
 							'LastModified' => strtotime($aComment['create_time']),
 							'IP' => $aComment['ip'],
 						);
 
 						$sSql = 'INSERT INTO `' . $this->e2Prefix . 'Comments` (' . implode(',', array_map(array($this, 'quoteTable'), array_keys($aSql))) . ')
-				VALUES (' . implode(',', array_map(array($dbE2, 'quote'), $aSql)) . ')';
+						VALUES (' . implode(',', array_map(array($dbE2, 'quote'), $aSql)) . ')';
 						$dbE2->query($sSql);
 					}
 				}
@@ -168,13 +168,15 @@ Class Parse {
 
 
 $parse = new Parse;
-$parse->e2Host = 'localhost';
-$parse->e2Db = 'all.zagirov.name';
-$parse->e2User = 'e2';
-$parse->e2Password = 'e2';
+
 $parse->wpHost = 'localhost';
-$parse->wpDb = 'wordpress';
-$parse->wpUser = 'e2';
-$parse->wpPassword = 'e2';
+$parse->wpDb = '';
+$parse->wpUser = '';
+$parse->wpPassword = '';
+
+$parse->e2Host = 'localhost';
+$parse->e2Db = '';
+$parse->e2User = '';
+$parse->e2Password = '';
 
 $parse->go();
