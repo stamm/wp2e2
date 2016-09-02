@@ -178,5 +178,7 @@ $parse->e2Host = 'localhost';
 $parse->e2Db = '';
 $parse->e2User = '';
 $parse->e2Password = '';
+// Если Эгея >= 2.5 версии, то раскоментируйте эту строку
+// $parse->e2Prefix = 'e2Blog';
 
 $parse->go();
