@@ -3,6 +3,9 @@ ini_set('display_errors',1);
 ini_set('display_startup_errors',1);
 error_reporting(-1);
 
+// Надо конвертировать теги функцией e2ali__alias_from_title_
+require 'system/core.php';
+
 /**
  * Класс импорта статей из wordpress в Эгею
  * User: Zagirov Rustam <rustam@zagirov.name>
@@ -129,7 +132,7 @@ Class Parse {
 						$iTagId = $sth->fetchColumn();
 						if ( ! $iTagId)
 						{
-							$sSql = 'INSERT INTO `' . $this->e2Prefix . 'Keywords`(Keyword, ' . $this->e2KeywordsUrlName . ') VALUES (' . $dbE2->quote($sTag) . ',' . $dbE2->quote($sTag) . ')';
+							$sSql = 'INSERT INTO `' . $this->e2Prefix . 'Keywords`(Keyword, ' . $this->e2KeywordsUrlName . ') VALUES (' . $dbE2->quote($sTag) . ',' . $dbE2->quote(e2ali__alias_from_title_($sTag)) . ')';
 							$dbE2->exec($sSql);
 							$iTagId = $dbE2->lastInsertId();
 						}
