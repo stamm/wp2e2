@@ -20,6 +20,9 @@ Class Parse {
 	public $e2User;
 	public $e2Password;
 	public $e2Prefix='e2_';
+	
+	// Название поля URL тега
+	public $e2KeywordsUrlName='URLName';
 
 
 	/**
@@ -126,7 +129,7 @@ Class Parse {
 						$iTagId = $sth->fetchColumn();
 						if ( ! $iTagId)
 						{
-							$sSql = 'INSERT INTO `' . $this->e2Prefix . 'Keywords`(Keyword, URLName) VALUES (' . $dbE2->quote($sTag) . ',' . $dbE2->quote($sTag) . ')';
+							$sSql = 'INSERT INTO `' . $this->e2Prefix . 'Keywords`(Keyword, ' . $this->e2KeywordsUrlName . ') VALUES (' . $dbE2->quote($sTag) . ',' . $dbE2->quote($sTag) . ')';
 							$dbE2->exec($sSql);
 							$iTagId = $dbE2->lastInsertId();
 						}
@@ -180,5 +183,8 @@ $parse->e2User = '';
 $parse->e2Password = '';
 // Если Эгея >= 2.5 версии, то раскоментируйте эту строку
 // $parse->e2Prefix = 'e2Blog';
+
+// Если Эгея >= 2.7 версии, то раскоментируйте эту строку
+// $parse->e2KeywordsUrlName = 'OriginalAlias';
 
 $parse->go();
